@@ -8,6 +8,7 @@ import { Text } from './text';
 type ButtonProps = Omit<PressableProps, 'children' | 'className'> & {
   title: string;
   variant?: 'primary' | 'secondary';
+  size?: 'lg' | 'md';
   leading?: ReactNode;
   trailing?: ReactNode;
   loading?: boolean;
@@ -19,9 +20,16 @@ const variants = {
   secondary: 'border border-border bg-surface',
 };
 
+// lg keeps the board's 56pt button. md is the estimated 48pt height from the onboarding design.
+const sizes = {
+  lg: 'h-14',
+  md: 'h-12',
+};
+
 export function Button({
   title,
   variant = 'primary',
+  size = 'lg',
   leading,
   trailing,
   loading = false,
@@ -38,7 +46,8 @@ export function Button({
       accessibilityState={{ disabled: inactive, busy: loading }}
       disabled={inactive}
       className={[
-        'h-14 flex-row items-center justify-center gap-2 rounded-full px-6 active:opacity-70 disabled:opacity-40',
+        'flex-row items-center justify-center gap-2 rounded-full px-6 active:opacity-70 disabled:opacity-40',
+        sizes[size],
         variants[variant],
         className,
       ]

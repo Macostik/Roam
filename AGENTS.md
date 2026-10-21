@@ -87,10 +87,22 @@ End every piece of work that changes code (features and fixes, not answers to qu
 
 - NativeWind V5 RC is pinned: `nativewind@5.0.0-rc.0`, `react-native-css@3.1.0-rc.0`, Tailwind 4.1.12, `lightningcss@1.30.1` override. Pre-release; move to stable V5 when released. Don't change the pins without checking the V5 guide.
 - Global CSS is `src/global.css`, imported once in `src/app/_layout.tsx`. Metro is wrapped with `withNativewind` in `metro.config.js`.
-- Existing screens use `StyleSheet` with `ThemedText`/`ThemedView`. New styling via `className` follows the design-token plan.
+- Style with `className`. Don't add `StyleSheet` or hex values to screens.
+
+## Design system
+
+- **Tokens:** the `@theme` block in `src/global.css` is the only source for color, type size, radius, spacing, and shadow. Use `bg-primary`, `text-muted`, `rounded-2xl`, `shadow-card`, and so on.
+- **Fonts:** Spline Sans (`font-spline`, `font-spline-medium`, `font-spline-bold`), loaded in `src/app/_layout.tsx`. Don't use `font-bold`; it is Tailwind's weight class.
+- **JS colors:** where a color must be a JS value (icon props, placeholder color, native tab tints), use `src/theme/colors.ts`. `npm run check:tokens` fails if it drifts from `global.css`. Update both when a color changes.
+- **Icons:** `lucide-react-native` through `src/components/ui/icon.tsx`. Exception: the native tab bar in `src/components/app-tabs.tsx` uses SF Symbols and Material symbols, because `NativeTabs` can't take SVG icons.
+- **Components:** primitives and composed cards live in `src/components/ui/`. Each takes a `variant`/`size`/`state` prop and a `className` merged last. Icon-only controls need a `label`.
+- **Text:** use `Text` from `src/components/ui/text.tsx` with a `variant` and a `tone`. Don't pass a color class to `Text` through `className`.
+- **Light mode only** (`userInterfaceStyle: light`). Dark tokens are not defined.
+- **Dev showcase:** `src/app/design-system.tsx` renders every component. It is not a tab. Open it with a deep link in a development build (`roam://design-system`).
+- **Web:** `src/components/app-tabs.web.tsx` is the web tab bar. It is not verified for the design system.
 
 ## Checks
 
-- Lint and type check pass before any task is called done.
+- Lint and type check pass before any task is called done. `npm run check:tokens` passes when colors change.
 - Screens that load data handle loading, error, and empty states.
 - AI features are tried against realistic inputs, and failures are explained by cause: missing data, the decision Jev made, the query, or the code.

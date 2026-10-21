@@ -19,6 +19,7 @@ export const colors = {
   info: '#2F6FEB',
   'info-soft': '#E8F0FE',
   'track-off': '#D1D5DB',
+  'ink-scrim': 'rgba(11, 11, 26, 0.7)',
 } as const;
 
 export type ColorToken = keyof typeof colors;

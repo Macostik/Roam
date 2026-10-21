@@ -1,10 +1,18 @@
 import { Text as NativeText, type TextProps } from 'react-native';
 
-export type TextVariant = 'display' | 'heading' | 'title' | 'body' | 'caption' | 'button';
+export type TextVariant =
+  | 'display'
+  | 'hero'
+  | 'heading'
+  | 'title'
+  | 'body'
+  | 'caption'
+  | 'button';
 export type TextTone = 'ink' | 'muted' | 'surface' | 'success' | 'danger' | 'info';
 
 const variants: Record<TextVariant, string> = {
   display: 'font-spline-bold text-display',
+  hero: 'font-spline-bold text-hero',
   heading: 'font-spline-bold text-heading',
   title: 'font-spline-bold text-title',
   body: 'font-spline text-body',
