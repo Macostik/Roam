@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@expo-google-fonts/spline-sans": "^0.4.2",
     "@expo/ui": "~57.0.25",
     "expo": "~57.0.30",
     "expo-constants": "~57.0.22",
@@ -17,6 +18,7 @@
     "expo-symbols": "~57.0.3",
     "expo-system-ui": "~57.0.4",
     "expo-web-browser": "~57.0.3",
+    "lucide-react-native": "^1.61.0",
     "nativewind": "5.0.0-rc.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -26,6 +28,7 @@
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
+    "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1"
   },
@@ -45,7 +48,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "check:tokens": "node scripts/check-tokens.mjs"
   },
   "overrides": {
     "lightningcss": "1.30.1"

@@ -4,12 +4,63 @@
 
 @import 'nativewind/theme';
 
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+/*
+ * Roam design tokens. The single source for colors, type, radius, spacing, and shadow.
+ * Components use className (bg-primary, text-muted, rounded-2xl). Where a color must be a
+ * JS value (icon props, placeholders, tab tints), it comes from src/theme/colors.ts, which
+ * `npm run check:tokens` keeps in sync with the --color-* values below.
+ * Values marked est. are estimated from the design board; check them on device.
+ */
+@theme {
+  /* Fonts. Weight comes from the family name, because "font-bold" is Tailwind's weight class. */
+  --font-spline: SplineSans_400Regular;
+  --font-spline-medium: SplineSans_500Medium;
+  --font-spline-bold: SplineSans_700Bold;
+
+  /* Colors (board palette) */
+  --color-primary: #ffc629;
+  --color-lavender: #c9b4ff;
+  --color-ink: #0b0b1a;
+  --color-muted: #6b7280;
+  --color-surface: #ffffff;
+  --color-canvas: #f4f5f7;
+  --color-border: #e5e7eb;
+  --color-glass: rgba(255, 255, 255, 0.7);
+
+  /* Colors (est.) */
+  --color-primary-soft: #fff4d6;
+  --color-lavender-soft: #f1edff;
+  --color-success: #2e9e5b;
+  --color-success-soft: #e6f6ec;
+  --color-danger: #d93d4b;
+  --color-danger-soft: #fdecee;
+  --color-info: #2f6feb;
+  --color-info-soft: #e8f0fe;
+  --color-track-off: #d1d5db;
+
+  /* Type sizes (board). Line heights are set with the --line-height variant. */
+  --text-display: 56px;
+  --text-display--line-height: 56px;
+  --text-heading: 28px;
+  --text-heading--line-height: 34px;
+  --text-title: 20px;
+  --text-title--line-height: 26px;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-caption: 14px;
+  --text-caption--line-height: 20px;
+  --text-button: 17px;
+  --text-button--line-height: 22px;
+
+  /* Radius (est.). Pair non-full radii with borderCurve continuous. */
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Spacing (est.): the 4-point grid, so p-4 is 16px. */
+  --spacing: 4px;
+
+  /* Shadow (est.) */
+  --shadow-card: 0 1px 2px rgba(11, 11, 26, 0.06), 0 4px 12px rgba(11, 11, 26, 0.08);
 }
