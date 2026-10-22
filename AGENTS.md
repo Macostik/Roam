@@ -19,7 +19,7 @@ npx eas-cli@latest <cmd>    # EAS builds, submits, and updates (use instead of b
 ## Expo
 
 - Expo ships breaking changes every SDK release, so don't trust memory. Before touching an Expo, EAS, or React Native API, check the `expo` major version in `package.json` and read `https://docs.expo.dev/versions/v<major>.0.0/`. For anything else, start from https://docs.expo.dev/llms.txt and follow its links.
-- Routes live in `src/app/`: every file is a screen and `_layout.tsx` files define navigators. API routes are `src/app/api/*+api.ts`. Keep components, hooks, and utils outside `src/app/`.
+- Routes live in `src/app/`: every file is a screen and `_layout.tsx` files define navigators. API routes are `src/app/api/*+api.ts`. Keep components, hooks, and utils outside `src/app/`. Auth is enforced with `Stack.Protected` in `src/app/_layout.tsx`: `(tabs)` needs a session; `onboarding`, `sign-up`, `verify`, `sign-in` need none. `verify` takes `flow` (`sign-up`/`sign-in`) and a display-only `email`. Sign out is on Profile.
 - `ios/` and `android/` are generated. Never create or edit them by hand; configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, switch to a development build (`npx expo run:ios`).
 
@@ -27,7 +27,7 @@ npx eas-cli@latest <cmd>    # EAS builds, submits, and updates (use instead of b
 
 Each tool has one job. Ask before moving a responsibility to a different tool.
 
-- **Auth:** Clerk is the source of truth. The app keeps its own custom auth screens. Set Clerk up through the Clerk CLI and use the Clerk MCP for current Expo patterns.
+- **Auth:** Clerk is the source of truth. The app keeps its own custom auth screens. Set Clerk up through the Clerk CLI and use the Clerk MCP for current Expo patterns. SDK: `@clerk/expo` with `tokenCache` (`expo-secure-store`); `ClerkProvider` wraps `src/app/_layout.tsx`. Clerk app "Roam"; keys live in `.env.local`, pulled with `npx clerk@latest env pull`. Custom flows use the method API (`useSignUp`/`useSignIn` → `password`, `verifications`/`mfa` email code, `finalize`), never the legacy `prepareFirstFactor`/`setActive` API. Sign-in is email + password; the emailed code is for sign-up and Clerk's new-device check (`needs_client_trust`). Name is stored in Clerk First/Last name. Instance password min length is 8. Clerk errors show under their field (`src/utils/auth.ts`).
 - **Content:** Sanity (properties, hosts, policies, house rules). Studio is a standalone app in `studio/`. Schema deploys and content changes go through the Sanity MCP, and generated property copy uses Agent Actions.
 - **Exact constraints** (price, guests, type, amenities, pets, place): GROQ filters, with values always passed as params.
 - **Soft intent** (quiet, cozy, secluded): Dataset Embeddings via `text::semanticSimilarity()` inside `score()`.

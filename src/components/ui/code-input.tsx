@@ -7,17 +7,19 @@ type CodeInputProps = {
   value: string;
   onChangeText: (value: string) => void;
   length?: number;
+  // error: shown under the boxes. Turns their borders red.
+  error?: string;
 };
 
 // One hidden TextInput does the typing, and the boxes only show its digits. This keeps iOS
 // one-time-code autofill working, which per-box inputs would break.
-export function CodeInput({ value, onChangeText, length = 6 }: CodeInputProps) {
+export function CodeInput({ value, onChangeText, length = 6, error }: CodeInputProps) {
   const inputRef = useRef<TextInput>(null);
   const digits = value.slice(0, length).split('');
   const activeIndex = Math.min(digits.length, length - 1);
 
   return (
-    <Pressable onPress={() => inputRef.current?.focus()}>
+    <Pressable onPress={() => inputRef.current?.focus()} className="gap-2">
       <View className="flex-row gap-2">
         {Array.from({ length }, (_, index) => {
           const active = index === activeIndex;
@@ -26,13 +28,22 @@ export function CodeInput({ value, onChangeText, length = 6 }: CodeInputProps) {
               key={index}
               className={[
                 'h-14 flex-1 items-center justify-center rounded-lg border-2',
-                active ? 'border-lavender bg-surface' : 'border-transparent bg-canvas',
+                error
+                  ? 'border-danger bg-canvas'
+                  : active
+                    ? 'border-lavender bg-surface'
+                    : 'border-transparent bg-canvas',
               ].join(' ')}>
               <Text variant="title">{digits[index] ?? ''}</Text>
             </View>
           );
         })}
       </View>
+      {error ? (
+        <Text variant="caption" tone="danger" className="px-1">
+          {error}
+        </Text>
+      ) : null}
       <TextInput
         ref={inputRef}
         value={value}

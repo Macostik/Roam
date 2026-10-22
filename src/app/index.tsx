@@ -1,6 +1,9 @@
+import { useAuth } from '@clerk/expo';
 import { Redirect } from 'expo-router';
 
-// First-run entry. Onboarding shows on every launch until Clerk sign-in exists (plan 05).
+// Entry: signed-in guests go to the tabs, everyone else to onboarding (shown on every signed-out launch).
+// The root layout only renders this once Clerk has loaded, so isSignedIn is settled here.
 export default function Index() {
-  return <Redirect href="/onboarding" />;
+  const { isSignedIn } = useAuth();
+  return <Redirect href={isSignedIn ? '/(tabs)' : '/onboarding'} />;
 }
