@@ -16,15 +16,15 @@ export default function OnboardingScreen() {
   const [index, setIndex] = useState(0);
   const isLast = index === onboardingSlides.length - 1;
 
-  // Until Clerk exists, every path out of onboarding leads to the placeholder sign-in.
-  const toSignIn = () => router.push('/sign-in');
+  // Until Clerk exists, every path out of onboarding leads to the mock sign-up (plan 06).
+  const toSignUp = () => router.push('/sign-up');
 
   const goTo = (next: number) => {
     listRef.current?.scrollToIndex({ index: next, animated: true });
     setIndex(next);
   };
 
-  const getStarted = () => (isLast ? toSignIn() : goTo(index + 1));
+  const getStarted = () => (isLast ? toSignUp() : goTo(index + 1));
 
   // The swipe settles on a page; keep the index in step with what the user sees.
   const onMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -50,7 +50,7 @@ export default function OnboardingScreen() {
             count={onboardingSlides.length}
             width={width}
             onGetStarted={getStarted}
-            onGoogle={toSignIn}
+            onGoogle={toSignUp}
           />
         )}
       />
@@ -69,7 +69,7 @@ export default function OnboardingScreen() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Skip onboarding"
-          onPress={toSignIn}
+          onPress={toSignUp}
           style={({ pressed }) => ({
             height: 36,
             justifyContent: 'center',

@@ -88,6 +88,8 @@ End every piece of work that changes code (features and fixes, not answers to qu
 - NativeWind V5 RC is pinned: `nativewind@5.0.0-rc.0`, `react-native-css@3.1.0-rc.0`, Tailwind 4.1.12, `lightningcss@1.30.1` override. Pre-release; move to stable V5 when released. Don't change the pins without checking the V5 guide.
 - Global CSS is `src/global.css`, imported once in `src/app/_layout.tsx`. Metro is wrapped with `withNativewind` in `metro.config.js`.
 - Style with `className`. Don't add `StyleSheet` or hex values to screens.
+- `--text-*--line-height` tokens are unitless ratios (34/28, not `34px`). The RC drops the `px` and multiplies by the font size, which stretches every `Text` to fill its parent.
+- `className` only works on core React Native components. For the screen root, use `View` with `pt-safe pb-safe`, not `SafeAreaView` from `react-native-safe-area-context`.
 
 ## Design system
 

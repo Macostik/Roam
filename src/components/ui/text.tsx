@@ -7,6 +7,7 @@ export type TextVariant =
   | 'title'
   | 'body'
   | 'caption'
+  | 'label'
   | 'button';
 export type TextTone = 'ink' | 'muted' | 'surface' | 'success' | 'danger' | 'info';
 
@@ -17,6 +18,7 @@ const variants: Record<TextVariant, string> = {
   title: 'font-spline-bold text-title',
   body: 'font-spline text-body',
   caption: 'font-spline-medium text-caption',
+  label: 'font-spline-medium text-body',
   button: 'font-spline-medium text-button',
 };
 

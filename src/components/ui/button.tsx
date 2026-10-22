@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ActivityIndicator, Pressable, type PressableProps } from 'react-native';
+import { ActivityIndicator, Pressable, View, type PressableProps } from 'react-native';
 
 import { colors } from '@/theme/colors';
 
@@ -12,6 +12,8 @@ type ButtonProps = Omit<PressableProps, 'children' | 'className'> & {
   leading?: ReactNode;
   trailing?: ReactNode;
   loading?: boolean;
+  // edge: the title stays centered and the trailing icon is pinned to the right edge (auth screens).
+  iconPlacement?: 'inline' | 'edge';
   className?: string;
 };
 
@@ -33,11 +35,13 @@ export function Button({
   leading,
   trailing,
   loading = false,
+  iconPlacement = 'inline',
   disabled = false,
   className,
   ...props
 }: ButtonProps) {
   const inactive = disabled || loading;
+  const edge = iconPlacement === 'edge';
 
   return (
     <Pressable
@@ -56,7 +60,11 @@ export function Button({
       {...props}>
       {leading}
       <Text variant="button">{title}</Text>
-      {loading ? <ActivityIndicator color={colors.ink} /> : trailing}
+      {edge ? (
+        <View className="absolute right-6">{loading ? <ActivityIndicator color={colors.ink} /> : trailing}</View>
+      ) : (
+        <>{loading ? <ActivityIndicator color={colors.ink} /> : trailing}</>
+      )}
     </Pressable>
   );
 }
